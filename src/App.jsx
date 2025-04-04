@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Messages from './components/Messages'
 import { sendChatMessage } from './services/chatService'
 import './App.css'
@@ -9,12 +9,23 @@ function App() {
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const textareaRef = useRef(null)
+
+  useEffect(() => {
+    // Focus textarea whenever loading state changes to false
+    if (!isLoading) {
+      setTimeout(() => {
+        textareaRef.current?.focus()
+      }, 100)
+    }
+  }, [isLoading, messages])
 
   const handleSend = async () => {
     if (input.trim()) {
       const userMessage = { role: 'user', content: input };
       setMessages(prev => [...prev, userMessage])
       setIsLoading(true)
+      setInput('')
 
       try {
         const data = await sendChatMessage([...messages, userMessage])
@@ -30,7 +41,6 @@ function App() {
         }])
       } finally {
         setIsLoading(false)
-        setInput('')
       }
     }
   }
@@ -48,6 +58,7 @@ function App() {
       <Messages messages={messages} />
       <div className="input-container">
         <textarea
+          ref={textareaRef}
           className="chat-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -55,6 +66,7 @@ function App() {
           placeholder="Type your message..."
           rows="1"
           disabled={isLoading}
+          autoFocus
         />
         <button 
           className="send-button" 
