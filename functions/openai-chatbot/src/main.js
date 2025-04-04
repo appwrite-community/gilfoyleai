@@ -1,5 +1,5 @@
 import { validateMessageStructure } from "./utils/validation.js";
-import OpenAI from "openai";
+import OpenAI from "openai/index.mjs";
 
 export default async ({ req, res, log, error }) => {
 
