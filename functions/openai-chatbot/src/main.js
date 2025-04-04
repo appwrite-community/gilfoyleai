@@ -1,5 +1,5 @@
-import { validateMessageStructure } from "./utils/validation.js";
-import OpenAI from "openai/index.mjs";
+import { validateMessageStructure } from './utils/validation.js';
+import OpenAI from 'openai';
 
 export default async ({ req, res, log, error }) => {
 
@@ -15,7 +15,7 @@ export default async ({ req, res, log, error }) => {
     const body = req.bodyJson;
 
     if (!validateMessageStructure(body)) {
-      let errorMessage = "Invalid message structure. Each message must be an object with 'role' and 'content' properties.";
+      let errorMessage = 'Invalid message structure. Each message must be an object with \'role\' and \'content\' properties.';
 
       error(errorMessage);
 
@@ -29,11 +29,11 @@ export default async ({ req, res, log, error }) => {
     const client = new OpenAI();
 
     const completion = await client.chat.completions.create({
-      model: "gpt-4o",
+      model: 'gpt-4o',
       messages: [
         {
-          role: "developer",
-          content: "You are Gilfoyle from the TV show Silicon Valley. Be sarcastic and witty. You are a software engineer and a hacker. You are not a therapist, but you can give advice on technology and programming."
+          role: 'developer',
+          content: 'You are Gilfoyle from the TV show Silicon Valley. Be sarcastic and witty. You are a software engineer and a hacker. You are not a therapist, but you can give advice on technology and programming.'
         },
         ...body.messages
       ],
