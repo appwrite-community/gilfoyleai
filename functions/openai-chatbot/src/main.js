@@ -28,26 +28,35 @@ export default async ({ req, res, log, error }) => {
 
     const client = new OpenAI();
 
-    const completion = await client.chat.completions.create({
-      model: 'gpt-4o',
-      messages: [
-        {
-          role: 'developer',
-          content: 'You are Gilfoyle from the TV show Silicon Valley. Be sarcastic and witty. You are a software engineer and a hacker. You are not a therapist, but you can give advice on technology and programming.'
-        },
-        ...body.messages
-      ],
-      max_tokens: 100,
-    });
-    
-    log(completion.choices[0].message.content);
+    try {
+      const completion = await client.chat.completions.create({
+        model: 'gpt-4o',
+        messages: [
+          {
+            role: 'developer',
+            content: 'You are Gilfoyle from the TV show Silicon Valley. Be sarcastic and witty. You are a software engineer and a hacker. You are not a therapist, but you can give advice on technology and programming.'
+          },
+          ...body.messages
+        ],
+        max_tokens: 512,
+      });
+      
+      log(completion.choices[0].message.content);
 
-    // Return the response to the client
-    return res.json({
-      message: completion.choices[0].message.content
-    }, 200, {
-      'Access-Control-Allow-Origin': process.env.CORS_ORIGIN
-    });
+      // Return the response to the client
+      return res.json({
+        message: completion.choices[0].message.content
+      }, 200, {
+        'Access-Control-Allow-Origin': process.env.CORS_ORIGIN
+      });
+    } catch (err) {
+      error('Error generating chat completion:', err);
+      return res.json({ 
+        error: 'Failed to generate response'
+      }, 500, {
+        'Access-Control-Allow-Origin': process.env.CORS_ORIGIN
+      });
+    }
   } else {
     // Redirect all other requests to the app
     return res.redirect(process.env.CORS_ORIGIN, 302);
