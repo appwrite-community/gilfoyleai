@@ -2,45 +2,49 @@
 
 ## 🧰 Usage
 
-### GET /ping
+### POST /
 
-- Returns a "Pong" message.
+- Takes a message array and returns a response from Gilfoyle AI.
 
-**Response**
+**Request**
 
-Sample `200` Response:
-
-```text
-Pong
+```json
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Tell me about React hooks."
+    }
+  ]
+}
 ```
-
-### GET, POST, PUT, PATCH, DELETE /
-
-- Returns a "Learn More" JSON response.
-
 **Response**
 
 Sample `200` Response:
 
 ```json
 {
-  "motto": "Build like a team of hundreds_",
-  "learn": "https://appwrite.io/docs",
-  "connect": "https://appwrite.io/discord",
-  "getInspired": "https://builtwith.appwrite.io"
+  "message": "Ah, React hooks. The magical solution that lets developers pretend they're writing functional code while secretly maintaining all the state management complexities they were trying to avoid..."
 }
 ```
 
+### OPTIONS /
+
+- Handles CORS preflight requests.
+
 ## ⚙️ Configuration
 
-| Setting           | Value         |
-| ----------------- | ------------- |
-| Runtime           | Node (18.0)   |
-| Entrypoint        | `src/main.js` |
-| Build Commands    | `npm install` |
-| Permissions       | `any`         |
-| Timeout (Seconds) | 15            |
+| **Setting** |	**Value** |
+|---|---|
+| Runtime | Node (22.0) |
+| Entrypoint	| `src/main.js` |
+| Build Commands	| `npm install` |
+| Permissions	| `any` |
+| Timeout (Seconds)	| `15` |
 
 ## 🔒 Environment Variables
 
-No environment variables required.
+| **Name**	| **Description** |
+|---|---|
+| `OPENAI_API_KEY`	| Your OpenAI API key |
+| `CORS_ORIGIN`	| Origin for CORS (e.g., http://localhost:5173) |
