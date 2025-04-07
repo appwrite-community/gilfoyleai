@@ -19,9 +19,10 @@ const Messages = ({ messages }) => {
             key={index} 
             className={`message ${message.role === 'user' ? 'user' : 'bot'}`}
           >
-            <div className="message-content">
-              {message.content}
-            </div>
+            <div 
+              className="message-content"
+              dangerouslySetInnerHTML={{ __html: message.content }}
+            />
           </div>
         ))}
         <div ref={messagesEndRef} />

@@ -144,22 +144,90 @@ h1 {
 
 @media (max-width: 768px) {
   .message-container {
-    padding: 1rem;
+    padding: 0.75rem;
+    width: 100%; /* Full width on mobile */
   }
   
   .message-content {
-    max-width: 75%;
+    max-width: 80%;
+    font-size: 0.9rem; /* Smaller font on mobile */
+    padding: 0.7rem 0.9rem;
   }
   
   .input-container {
-    padding: 0.8rem;
+    padding: 0.7rem;
   }
   
   .chat-input {
     padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    max-width: none; /* Remove max-width limit on mobile */
   }
   
   .send-button {
-    padding: 0.6rem 1rem;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+  
+  h1 {
+    font-size: 1.1rem;
+    padding: 0.7rem;
+  }
+  
+  /* Adjust animation for mobile */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .message-container {
+    padding: 0.5rem;
+  }
+  
+  .message-content {
+    max-width: 85%;
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+  }
+  
+  .input-container {
+    padding: 0.6rem;
+  }
+  
+  .chat-input {
+    padding: 0.5rem 0.8rem;
+  }
+  
+  .send-button {
+    padding: 0.5rem 0.8rem;
+  }
+  
+  /* Code block adjustments for mobile */
+  .message-content code {
+    font-size: 0.8em;
+    padding: 0.2rem 0.3rem;
+  }
+}
+
+/* Code block styles */
+.message-content code {
+  display: block;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  background-color: #f1f1f1;
+  color: #e83e8c;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
