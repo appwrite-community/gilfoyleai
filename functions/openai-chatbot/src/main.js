@@ -35,6 +35,7 @@ export default async ({ req, res, log, error }) => {
         input: body.messages[body.messages.length - 1].content,
       })
 
+      log('Last inputted message:', body.messages[body.messages.length - 1].content);
       log('Moderation Flagged:', moderation.results[0].flagged);
       log('Category Scores:', JSON.stringify(moderation.results[0].category_scores, null, 2));
 
