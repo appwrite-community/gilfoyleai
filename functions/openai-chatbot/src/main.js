@@ -29,6 +29,25 @@ export default async ({ req, res, log, error }) => {
     const client = new OpenAI();
 
     try {
+      // Check if the request is flagged by moderation
+      const moderation = await client.moderations.create({
+        model: 'omni-moderation-latest',
+        input: body.messages[body.messages.length - 1].content,
+      })
+
+      log('Moderation Flagged:', moderation.results[0].flagged);
+      log('Category Scores:', JSON.stringify(moderation.results[0].category_scores, null, 2));
+
+      // Return the response to the client
+      if (moderation.results[0].flagged) {
+        return res.json({ 
+          message: 'Message flagged by moderation'
+        }, 200, {
+          'Access-Control-Allow-Origin': process.env.CORS_ORIGIN
+        });
+      }
+
+      // Create a chat completion using the OpenAI API
       const completion = await client.chat.completions.create({
         model: 'gpt-4o',
         messages: [
@@ -44,10 +63,9 @@ export default async ({ req, res, log, error }) => {
         ],
         max_tokens: 512,
       });
-      
-      log(completion.choices[0].message.content);
 
-      // Return the response to the client
+      log('Response:', completion.choices[0].message.content);
+
       return res.send({
         message: completion.choices[0].message.content
       }, 200, {
