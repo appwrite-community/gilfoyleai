@@ -41,7 +41,7 @@ export default async ({ req, res, log, error }) => {
       // Return the response to the client
       if (moderation.results[0].flagged) {
         return res.json({ 
-          message: 'Message flagged by moderation'
+          message: '<strong>Message flagged by moderation</strong>'
         }, 200, {
           'Access-Control-Allow-Origin': process.env.CORS_ORIGIN
         });
